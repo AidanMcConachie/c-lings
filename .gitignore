@@ -1,0 +1,4 @@
+/build/
+/clings
+.clings/
+.clings-state.txt

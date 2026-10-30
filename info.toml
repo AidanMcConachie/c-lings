@@ -1,0 +1,758 @@
+format_version = 1
+
+welcome_message = """
+Is this your first time? Don't worry, c-lings is made for beginners!
+We are going to teach you a lot of things about C, but before we can
+get started, here are some notes about how c-lings operates:
+
+1. The central concept behind c-lings is that you solve exercises. These
+   exercises usually contain some compiler errors or failing tests, and
+   it's your job to find the bug and fix it!
+2. Make sure to have your editor open in the `exercises/` directory. Then,
+   c-lings will show you the path of the current exercise under the progress
+   bar. Open the exercise file in your editor, fix errors and save the file.
+   c-lings will automatically detect the file change and rerun the exercise.
+   If all errors are fixed, c-lings will ask you to move on to the next one.
+3. Exercises are compiled with -Wall -Wextra -Werror: every warning is an
+   error. That's on purpose, C compilers' warnings catch real bugs!
+4. If you're stuck on an exercise, enter `h` to show a hint.
+5. If an exercise doesn't make sense to you, read the README.md in its
+   directory, and don't hesitate to look things up on cppreference.com."""
+
+final_message = """
+We hope you enjoyed learning about the various aspects of C!
+
+If you noticed any issues, please don't hesitate to report them. Some ideas
+for where to go next:
+
+- Read "The C Programming Language" (K&R) or "Modern C" by Jens Gustedt
+- Build something! A hex dump tool, a tiny shell, a hash table...
+- Learn your tools: gdb, valgrind and -fsanitize=address,undefined
+- Read the source of clings itself (it's written in C, of course)"""
+
+# INTRO
+
+[[exercises]]
+name = "intro1"
+dir = "00_intro"
+test = false
+skip_check_unsolved = true
+hint = """
+Enter `n` to move on to the next exercise.
+You might need to press ENTER after typing `n`."""
+
+[[exercises]]
+name = "intro2"
+dir = "00_intro"
+test = false
+hint = """
+The format string contains `%s`, so printf expects a second argument: the
+string to print in its place. Try `printf("Hello %s!\\n", "world");`"""
+
+# VARIABLES
+
+[[exercises]]
+name = "variables1"
+dir = "01_variables"
+test = false
+hint = """
+The declaration on that line is missing a type. Which type fits the
+value 5? (Hint: it's the one printf's `%d` expects.)"""
+
+[[exercises]]
+name = "variables2"
+dir = "01_variables"
+test = false
+hint = """
+A const variable can't be assigned to, it can only be initialized. Instead
+of assigning 42 afterwards, initialize `answer` with the right value and
+remove the assignment."""
+
+[[exercises]]
+name = "variables3"
+dir = "01_variables"
+test = false
+hint = """
+`minutes` is declared inside the `if` block, so it doesn't exist after the
+block's closing `}`. Move its declaration to a place where both uses can
+see it."""
+
+[[exercises]]
+name = "variables4"
+dir = "01_variables"
+hint = """
+Inside the `if`, `int count = 0;` declares a *new* variable that shadows
+the outer `count`. The outer one never changes. Update the outer variable
+instead of declaring a new one."""
+
+# FUNCTIONS
+
+[[exercises]]
+name = "functions1"
+dir = "02_functions"
+test = false
+hint = """
+A function definition looks like this:
+
+    void say_hi(void) {
+        printf("hi\\n");
+    }
+
+Write one called `call_me` above main()."""
+
+[[exercises]]
+name = "functions2"
+dir = "02_functions"
+test = false
+hint = """
+When the compiler reaches `square(7)` it hasn't seen `square` yet. Add a
+prototype (the first line of the definition, followed by a `;`) above
+main():
+
+    int square(int x);"""
+
+[[exercises]]
+name = "functions3"
+dir = "02_functions"
+hint = """
+Both functions compute a value but never `return` it. `n % 2 == 0;` on its
+own just computes a value and throws it away. Add the missing `return`
+statements."""
+
+[[exercises]]
+name = "functions4"
+dir = "02_functions"
+hint = """
+Assigning to `x` only changes the function's own copy. Change the return
+type from `void` to `int` and `return` the doubled value."""
+
+[[exercises]]
+name = "functions5"
+dir = "02_functions"
+hint = """
+A normal local variable is created fresh on each call. Declare it `static`
+and it is initialized only once, keeping its value between calls."""
+
+# IF
+
+[[exercises]]
+name = "if1"
+dir = "03_if"
+hint = """
+    if (a > b) {
+        return a;
+    }
+    return b;
+
+Or in one line with the conditional operator: `return a > b ? a : b;`"""
+
+[[exercises]]
+name = "if2"
+dir = "03_if"
+hint = """
+An else-if chain stops at the first condition that is true. With `score >
+60` first, a score of 100 gets a 'D'! Check the biggest threshold first, and
+think about whether you need `>` or `>=`."""
+
+[[exercises]]
+name = "if3"
+dir = "03_if"
+hint = """
+Without a `break`, execution falls through into the next case, so every day
+ends up as "Sunday". Add `break;` after each assignment, or `return` the name
+directly from each case. A `default:` label handles everything else."""
+
+# TYPES
+
+[[exercises]]
+name = "types1"
+dir = "04_types"
+hint = """
+`a + b` and `2` are both ints, so `/` does integer division and throws away
+the fraction before the result is converted to a double. Make one of the
+operands a double, e.g. by dividing by `2.0` or with a cast:
+`(double)(a + b) / 2`."""
+
+[[exercises]]
+name = "types2"
+dir = "04_types"
+hint = """
+Letters 'a'..'z' have consecutive values, and so do 'A'..'Z' and '0'..'9'.
+So `c - 'a'` is the position of a lowercase letter in the alphabet (0 for
+'a'), and adding 'A' to that position gives you the uppercase letter.
+Similarly `c - '0'` is the value of a digit character.
+
+You'll need to check that c is between 'a' and 'z' first."""
+
+[[exercises]]
+name = "types3"
+dir = "04_types"
+hint = """
+- intN_t and uintN_t have exactly N bits. sizeof counts bytes (8 bits).
+- Unsigned arithmetic wraps around modulo 2^N. The largest unsigned int is
+  called UINT_MAX in <limits.h>.
+- Converting a floating point number to an integer drops the fraction
+  (rounds towards zero).
+- 'A' + 2 is the character two letters after 'A'."""
+
+[[exercises]]
+name = "types4"
+dir = "04_types"
+hint = """
+Instead of checking whether a == b, check whether the distance between them
+is tiny: `fabs(a - b) < 1e-9`. fabs() is the absolute value for doubles,
+from <math.h>."""
+
+# LOOPS
+
+[[exercises]]
+name = "loops1"
+dir = "05_loops"
+hint = """
+Check the loop by hand for n = 1: it should add 1. Which numbers does `i`
+actually take? Think about where the loop should start and whether `<` or
+`<=` is the right comparison."""
+
+[[exercises]]
+name = "loops2"
+dir = "05_loops"
+hint = """
+Keep a counter of steps. While n isn't 1, update n according to the rule
+(use `n % 2 == 0` to check for even numbers) and add one to the counter."""
+
+[[exercises]]
+name = "loops3"
+dir = "05_loops"
+hint = """
+For n = 0 the `while` condition is false right away, so the loop body never
+runs and the function returns 0. A `do { ... } while (n != 0);` loop always
+runs its body at least once."""
+
+# QUIZ 1
+
+[[exercises]]
+name = "quiz1"
+dir = "quizzes"
+hint = """
+- The leap year rule fits in one boolean expression using `%`, `&&`, `||`.
+- A switch with several case labels per line works nicely for
+  days_in_month: `case 4: case 6: case 9: case 11: return 30;`
+- days_between_years is a loop that calls is_leap_year for each year."""
+
+# ARRAYS
+
+[[exercises]]
+name = "arrays1"
+dir = "06_arrays"
+hint = """
+The array is declared with room for 4 ints but initialized with 5. Either
+fix the size, or leave the brackets empty (`int primes[] = ...`) and let
+the compiler count.
+
+For the second test: when an array has fewer initializers than elements,
+the rest are set to zero."""
+
+[[exercises]]
+name = "arrays2"
+dir = "06_arrays"
+hint = """
+An array parameter like `int values[]` is really a pointer (`int *values`),
+so `sizeof(values)` is the size of a pointer, not of the array. The tests
+already call `sum(nums, 6)`: add a `size_t len` parameter and loop up to it.
+
+For max_of, start with `values[0]` as the best so far and compare it to the
+rest of the elements."""
+
+[[exercises]]
+name = "arrays3"
+dir = "06_arrays"
+hint = """
+The diagonal elements are the ones where the row and column are the same:
+m[i][i].
+
+To transpose, swap m[row][col] with m[col][row]. But if you do that for
+every row and column, each pair gets swapped twice (and ends up back where
+it started)! Only loop over col > row."""
+
+[[exercises]]
+name = "arrays4"
+dir = "06_arrays"
+hint = """
+For i = 0, the code swaps values[0] with values[len]. But an array of
+length len has indices 0 to len - 1, so values[len] is past the end! The
+partner of index i is len - 1 - i."""
+
+# STRINGS
+
+[[exercises]]
+name = "strings1"
+dir = "07_strings"
+hint = """
+A C string must end with '\\0'. make_word writes three letters but no
+terminator, so string functions keep reading into the junk that follows.
+Add `out[3] = '\\0';`.
+
+For my_strlen, count up from 0 until you hit the '\\0':
+`while (s[n] != '\\0') n++;`"""
+
+[[exercises]]
+name = "strings2"
+dir = "07_strings"
+hint = """
+`a == b` compares two pointers: it's only true if they point at the very
+same memory. To compare the characters, use strcmp() from <string.h>. It
+returns 0 when the strings are equal (and a negative or positive number
+otherwise, for sorting)."""
+
+[[exercises]]
+name = "strings3"
+dir = "07_strings"
+hint = """
+snprintf works like printf, but writes into a buffer:
+
+    snprintf(out, out_size, "Hello, %s!", name);
+
+It never writes more than out_size bytes and always adds the '\\0'."""
+
+[[exercises]]
+name = "strings4"
+dir = "07_strings"
+hint = """
+Loop with an index until you reach '\\0': `for (size_t i = 0; s[i]; i++)`.
+
+For capitalize_words, keep a bool that remembers whether the previous
+character was a space (start it as true). When you see a non-space while it
+is true, uppercase that character. toupper() expects an unsigned char value,
+so call it as `toupper((unsigned char)s[i])`."""
+
+# POINTERS
+
+[[exercises]]
+name = "pointers1"
+dir = "08_pointers"
+hint = """
+The tests call `set_to_42(&x)`, passing an address, so the parameter needs
+to be a pointer: `int *p`. Then write through it with `*p = 42;`.
+(`p = 42` would try to make the pointer point at address 42!)"""
+
+[[exercises]]
+name = "pointers2"
+dir = "08_pointers"
+hint = """
+`a` and `b` are swap's own copies of the addresses. Swapping them changes
+nothing for the caller. Swap the values they point to instead, using `*a`
+and `*b`, and an `int` temporary."""
+
+[[exercises]]
+name = "pointers3"
+dir = "08_pointers"
+hint = """
+A loop like `for (const int *p = start; p != end; p++)` visits every
+element; `*p` is the current one.
+
+For find_char, move `s` forward with `s++` until `*s` is the character
+you're looking for (return s) or '\\0' (return NULL)."""
+
+[[exercises]]
+name = "pointers4"
+dir = "08_pointers"
+hint = """
+Write the results through the pointers: `*min = values[0];` etc.
+
+For divide, check `b == 0` first and return false before touching the out
+parameters. C's `/` and `%` give you the quotient and remainder."""
+
+[[exercises]]
+name = "pointers5"
+dir = "08_pointers"
+hint = """
+`counter` lives on the stack and is gone when get_counter returns. Make it
+`static` so it lives as long as the program does.
+
+In skip_spaces, `*s` is the caller's pointer and `**s` the character it
+points at. While `**s == ' '`, advance the caller's pointer with `(*s)++`
+(the parentheses matter!)."""
+
+# QUIZ 2
+
+[[exercises]]
+name = "quiz2"
+dir = "quizzes"
+hint = """
+- str_reverse: use two pointers, one at the start and one at the last
+  character, swap and move them towards each other until they meet.
+- word_count: count the places where a word *starts*: a non-space char that
+  is the first char or comes after a space.
+- reverse_words: one way is to walk backwards from the end of `s`: skip
+  spaces, find the start of the word, memcpy it to `out`, repeat. Don't
+  forget the '\\0' at the end!"""
+
+# STRUCTS
+
+[[exercises]]
+name = "structs1"
+dir = "09_structs"
+hint = """
+Members are declared like variables, without initializers:
+
+    struct Point {
+        int x;
+        int y;
+    };
+
+For Color, each member must fit 0..255 and take one byte: `unsigned char`
+(or uint8_t from <stdint.h>)."""
+
+[[exercises]]
+name = "structs2"
+dir = "09_structs"
+hint = """
+birthday gets a *copy* of the Person, so incrementing the copy's age does
+nothing for the caller. Take a `Person *p` instead and use `p->age++`.
+
+In make_person, copy the name with `snprintf(p.name, sizeof p.name, "%s",
+name);`, which truncates long names safely, then set the age."""
+
+[[exercises]]
+name = "structs3"
+dir = "09_structs"
+hint = """
+`items[i].price` accesses a member of the i-th struct in the array.
+
+For most_expensive, keep a `const Item *best = NULL;` and update it to
+`&items[i]` whenever best is NULL or items[i] is more expensive. With
+`best->price` you read a member through the pointer."""
+
+[[exercises]]
+name = "structs4"
+dir = "09_structs"
+hint = """
+Nested members are accessed with chained dots: `r.bottom_right.x`. Through a
+pointer, use `r->top_left.x`.
+
+rect_translate receives a copy of the Rect, so you can modify `r` and return
+it; the caller's Rect is unaffected."""
+
+# ENUMS
+
+[[exercises]]
+name = "enums1"
+dir = "10_enums"
+hint = """
+Add `WEST` after SOUTH. Enum constants count up from 0, in the order you
+list them, so here they go clockwise.
+
+That means turning right is "add 1, wrapping around after 3", which is what
+the `%` operator is for: `(d + 1) % 4`. The result is an int, so you may
+want to cast it back: `(enum Direction)(...)`."""
+
+[[exercises]]
+name = "enums2"
+dir = "10_enums"
+hint = """
+Read the compiler warning: the switch doesn't handle SHAPE_TRIANGLE. Add a
+`case SHAPE_TRIANGLE:` that returns base * height / 2.
+
+It's tempting to add `default:` instead, but then the compiler can't warn
+you anymore when you add another shape!"""
+
+[[exercises]]
+name = "enums3"
+dir = "10_enums"
+hint = """
+Switch on `v->kind` and, in each case, read the matching union member
+(`v->as.i`, `v->as.d` or `v->as.text`). snprintf can do the formatting:
+"%d", "%.2f" and "\\"%s\\"" are the format strings you need."""
+
+# MEMORY
+
+[[exercises]]
+name = "memory1"
+dir = "11_memory"
+hint = """
+Allocate room for `len` ints with `malloc(len * sizeof(int))` (or the
+idiomatic `malloc(len * sizeof *a)`), check that it didn't return NULL,
+then fill it in a loop and return the pointer."""
+
+[[exercises]]
+name = "memory2"
+dir = "11_memory"
+hint = """
+Every block you malloc must be freed exactly once when you're done with it.
+`squares` is never freed. Call `free(squares);` once you've computed the
+total, before returning."""
+
+[[exercises]]
+name = "memory3"
+dir = "11_memory"
+hint = """
+strlen("hello") is 5, but the string takes 6 bytes because of the '\\0'
+that strcpy also copies. Allocate strlen(s) + 1 bytes.
+
+For concat, allocate strlen(a) + strlen(b) + 1 bytes, then copy a, then b
+right after it (memcpy, or strcpy + strcat)."""
+
+[[exercises]]
+name = "memory4"
+dir = "11_memory"
+hint = """
+In vec_push, when len == cap, compute the new capacity (4 if it's 0,
+otherwise cap * 2) and call realloc. realloc(NULL, n) works like malloc(n).
+
+Don't write `v->data = realloc(v->data, ...)`: if realloc fails it returns
+NULL and you've lost your only pointer to the old block. Store the result
+in a temporary and check it first.
+
+vec_free frees data and sets data to NULL and len/cap to 0."""
+
+[[exercises]]
+name = "memory5"
+dir = "11_memory"
+hint = """
+The tests call `buffer_destroy(&b)`, so the parameter is a `Buffer **`.
+Inside, `*b` is the caller's Buffer pointer:
+
+1. If *b is NULL, there's nothing to do.
+2. Free (*b)->data, and then *b itself (in that order!).
+3. Set *b = NULL."""
+
+# QUIZ 3
+
+[[exercises]]
+name = "quiz3"
+dir = "quizzes"
+hint = """
+- Before appending n characters you need len + n + 1 bytes (the +1 is for
+  the '\\0'). If cap is smaller, keep doubling it until it's big enough and
+  realloc. A helper like `sb_reserve(StrBuf *sb, size_t extra)` keeps this
+  in one place.
+- memcpy the new text to `data + len`, including its '\\0'.
+- sb_take returns `data` and resets the struct without freeing anything.
+- free(NULL) is fine, which makes sb_free easy."""
+
+# PREPROCESSOR
+
+[[exercises]]
+name = "preprocessor1"
+dir = "12_preprocessor"
+hint = """
+Expand the macros by hand: SQUARE(1 + 2) becomes `1 + 2 * 1 + 2`, which is
+5. And `100 / SQUARE(5)` becomes `100 / 5 * 5`.
+
+Put parentheses around every use of the argument AND around the whole
+expansion: `#define SQUARE(x) ((x) * (x))`. DOUBLE needs the outer
+parentheses too."""
+
+[[exercises]]
+name = "preprocessor2"
+dir = "12_preprocessor"
+hint = """
+- `#x` in a macro body turns the argument x into a string literal.
+- ARRAY_LEN is the sizeof trick from the arrays section:
+  `(sizeof(arr) / sizeof((arr)[0]))`
+- `get_##name` glues `get_` and the argument into one identifier. A macro
+  can span several lines if each line but the last ends with a backslash."""
+
+[[exercises]]
+name = "preprocessor3"
+dir = "12_preprocessor"
+hint = """
+Look at how the enum is built: X is defined to turn each entry into
+`COLOR_<name>,`, then COLOR_LIST is expanded, then X is undefined again.
+Do the same inside the color_names initializer, but define X so that each
+entry becomes a string: `#define X(name) #name,`."""
+
+# FUNCTION POINTERS
+
+[[exercises]]
+name = "function_pointers1"
+dir = "13_function_pointers"
+hint = """
+You call a function pointer just like a function: `x = f(x);`. Do that in
+a loop n times.
+
+add_three is a normal function with the right signature to be an IntFn:
+`int add_three(int x)`."""
+
+[[exercises]]
+name = "function_pointers2"
+dir = "13_function_pointers"
+hint = """
+INT_MAX - INT_MIN doesn't fit in an int: signed overflow is undefined
+behavior and in practice wraps around to a negative number, so the order
+comes out wrong. Compare instead of subtracting: `(x > y) - (x < y)`.
+
+For strings, the array elements are `const char *`, so qsort gives you
+pointers to *those*: cast a to `const char *const *`, dereference it to get
+the string, then use strcmp."""
+
+[[exercises]]
+name = "function_pointers3"
+dir = "13_function_pointers"
+hint = """
+Write `multiply` and `divide` functions with the same signature as `add`
+(divide returns false when b is 0), then add `{'*', multiply}` and
+`{'/', divide}` entries to the table. calculate doesn't need to change!"""
+
+# BITWISE
+
+[[exercises]]
+name = "bitwise1"
+dir = "14_bitwise"
+hint = """
+Build a mask with only bit n set: `1u << n`. Then:
+- set:    x | mask
+- clear:  x & ~mask
+- toggle: x ^ mask
+- test:   (x & mask) != 0"""
+
+[[exercises]]
+name = "bitwise2"
+dir = "14_bitwise"
+hint = """
+1. PERM_EXEC = 3 is binary 11, which is PERM_READ and PERM_WRITE combined!
+   Flags must be distinct powers of two: 1, 2, 4, 8... (`1 << 2` is 4).
+2. `perms && p` only checks that both are non-zero. To check a bit, use the
+   bitwise AND: `(perms & p) != 0`."""
+
+[[exercises]]
+name = "bitwise3"
+dir = "14_bitwise"
+hint = """
+- popcount: check the lowest bit with `x & 1`, then shift `x >>= 1`, until
+  x is 0. (Or the cute trick: `x &= x - 1` clears the lowest set bit.)
+- is_power_of_two: a power of two has a single set bit, and subtracting 1
+  flips that bit and all the bits below it. So `(x & (x - 1)) == 0`... but
+  watch out for 0!
+- byte_at: shift the byte you want down to the bottom (8 * n bits), then
+  mask it with 0xFF."""
+
+# ERROR HANDLING
+
+[[exercises]]
+name = "error_handling1"
+dir = "15_error_handling"
+hint = """
+Check for the bad inputs before dividing, and return the matching status
+without touching *result:
+
+- b == 0
+- a == INT_MIN && b == -1
+
+Integer division by zero doesn't give you a nice error in C: it's undefined
+behavior, and on x86 the CPU traps and the program dies with SIGFPE."""
+
+[[exercises]]
+name = "error_handling2"
+dir = "15_error_handling"
+hint = """
+strtol(s, &end, 10) parses a number and sets `end` to point just past the
+last character it used. Check three things:
+
+1. end == s means there were no digits at all.
+2. *end != '\\0' means there's junk after the number.
+3. errno == ERANGE means the number didn't fit. strtol doesn't reset errno
+   on success, so set `errno = 0;` before calling it."""
+
+[[exercises]]
+name = "error_handling3"
+dir = "15_error_handling"
+hint = """
+Every early `return` after an allocation leaks it, and even the success
+path never frees `f` and `l` (only `badge` is handed to the caller).
+
+Declare `f` and `l` at the top initialized to NULL, and a `status`
+variable. Replace each early return with setting status and
+`goto cleanup;`. At the end:
+
+    cleanup:
+        free(f);
+        free(l);
+        return status;
+
+free(NULL) is a no-op, so it doesn't matter how far the function got."""
+
+# FILES
+
+[[exercises]]
+name = "files1"
+dir = "16_files"
+hint = """
+write_lines never closes the file. Streams are buffered, so the lines are
+still sitting in memory when count_lines opens the file and finds it empty.
+Call fclose(f) when you're done writing (and return whether it
+succeeded)."""
+
+[[exercises]]
+name = "files2"
+dir = "16_files"
+hint = """
+1. fopen the file for reading; return -1 if that fails.
+2. `while (fgets(line, sizeof line, f) != NULL)` reads it line by line.
+3. sscanf(line, "%63[^,],%d", name, &score) returns 2 when it read both a
+   name (anything up to a comma) and a number. Only add those lines.
+4. fclose the file before returning the total."""
+
+# LINKED LISTS
+
+[[exercises]]
+name = "linked_lists1"
+dir = "17_linked_lists"
+hint = """
+Walking a list looks like this:
+
+    for (const Node *n = head; n != NULL; n = n->next) {
+        // use n->value
+    }
+
+Freeing is trickier: once you free a node you can't read its `next`
+anymore. Save `head->next` in a variable, free `head`, then continue with
+the saved pointer."""
+
+[[exercises]]
+name = "linked_lists2"
+dir = "17_linked_lists"
+hint = """
+Start with `Node **link = head;`. `*link` is the pointer you're looking at
+(first the head pointer, then a node's `next`). Move along with
+`link = &(*link)->next;`.
+
+- push_back: walk until *link is NULL, then `*link = new_node;`.
+- remove_value: walk until (*link)->value matches. Save the node, set
+  `*link = node->next;` to unhook it, and free it.
+
+This handles the head exactly like every other node, so you don't need any
+special cases!"""
+
+[[exercises]]
+name = "linked_lists3"
+dir = "17_linked_lists"
+hint = """
+Reversing: keep a `prev` pointer (starting at NULL). For each node, save its
+next, point its `next` at prev, move prev to this node and continue with
+the saved next. At the end, prev is the new head.
+
+Cycles: walk two pointers through the list, `slow` one step at a time and
+`fast` two steps at a time. If fast reaches NULL there's no cycle; if they
+ever point at the same node, there is one."""
+
+# QUIZ 4
+
+[[exercises]]
+name = "quiz4"
+dir = "quizzes"
+hint = """
+Use a local `long stack[RPN_MAX_STACK]` and a count of how many values are
+on it.
+
+Loop over the tokens: skip spaces, remember where the token starts, and
+advance to the next space or '\\0'. For each token:
+
+- If it's exactly one of + - * / (length 1!), pop b, then a, push a op b.
+  Check there are 2 values first, and that b isn't 0 for division.
+- Otherwise parse it with strtol. It's only a valid number if strtol
+  consumed the *whole* token (end == the token's end) and at least one
+  character.
+
+A dispatch table of function pointers for the operators is a nice touch,
+but a switch works too. At the end there must be exactly one value left."""
