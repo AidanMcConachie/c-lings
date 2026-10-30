@@ -1,8 +1,8 @@
 # c-lings
 
-Small exercises to get you used to reading and writing C code, in the
-spirit of [rustlings](https://github.com/rust-lang/rustlings). This includes
-reading and responding to compiler warnings and errors!
+A set of small exercises for learning to read and write C, modeled on
+[rustlings](https://github.com/rust-lang/rustlings). The exercises also cover
+interpreting and resolving compiler warnings and errors.
 
 c-lings itself is written in C, with no dependencies beyond a C compiler and
 a POSIX system (Linux, macOS, WSL).
@@ -18,12 +18,12 @@ cd c-lings
 clings               # starts watch mode
 ```
 
-You can also just run `./clings` from this repository's root, but then the
-official solutions are already sitting in `solutions/`. No peeking!
+`./clings` can also be run directly from the repository root. Note that the
+reference solutions are located in `solutions/`.
 
 Open the exercise shown under the progress bar in your editor, fix it and
-save. clings recompiles and re-checks it every time the file changes. Once it
-passes, press `n` to move on.
+save. clings recompiles and re-checks the exercise whenever the file changes.
+Once it passes, press `n` to continue to the next one.
 
 ### Watch mode keys
 
@@ -55,7 +55,7 @@ Each exercise is compiled with `cc -std=c17 -Wall -Wextra -Werror -g` (set
 program exits with status 0. Programs that crash, or run for over 10
 seconds, fail.
 
-Most exercises include [`exercises/clings.h`](exercises/clings.h), a tiny test
+Most exercises include [`exercises/clings.h`](exercises/clings.h), a minimal test
 harness that supplies `main()`, runs every `TEST(...)` and provides `ASSERT_*`
 macros. It also tracks `malloc`/`free` so tests catch memory leaks and heap
 buffer overflows, even without sanitizers. When the toolchain supports them,
@@ -101,7 +101,7 @@ src/             the clings runner (C)
   embed.c        build tool: bundles exercises/solutions into the binary
 info.toml        exercise order, metadata and hints
 exercises/       the exercises, one directory per topic
-solutions/       official solutions
+solutions/       reference solutions
 ```
 
 The exercises and solutions are embedded into the `clings` binary at build
@@ -114,3 +114,7 @@ time, which is what makes `clings reset` and `clings init` work anywhere.
    and, if the exercise has its own `main()` instead of tests, `test = false`.
 3. Run `make dev-check`. It checks that every exercise fails as shipped and
    every solution passes.
+
+## License
+
+Released under the MIT License. See [LICENSE](LICENSE).
