@@ -97,6 +97,7 @@ src/             the clings runner (C)
   info.c         parser for info.toml
   state.c        progress tracking (.clings-state.txt)
   term.c         terminal handling
+  util.c         allocation, string buffer and file helpers
   embed.c        build tool: bundles exercises/solutions into the binary
 info.toml        exercise order, metadata and hints
 exercises/       the exercises, one directory per topic
